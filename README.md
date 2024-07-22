@@ -11,3 +11,7 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.js
 ```
+node_modules\@openzeppelin\contracts-upgradeable\token\ERC20\ERC20Upgradeable.sol
+function _transfer(address from, address to, uint256 value) internal
+变更为：
+function _transfer(address from, address to, uint256 value) internal virtual
