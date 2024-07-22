@@ -31,14 +31,16 @@ module.exports = {
     apiKey: {
       bscTestnet: "QNV1UQ2D5ZC9F8HYMBXQJ82V5SHIITI2YI",
       sepolia: "4GM32Y7594NGV9R9MQAQGKA49AXBHP8YGX",
-      mxc: "abc"
+      mxc: "721da024-5d2c-402c-85f6-49f321b61d8f"
     },
     customChains: [
       {
         network: "mxc",
         chainId: 18686,
         urls: {
+          // apiURL: "https://www.moonchain.com/api",
           apiURL: "https://explorer.moonchain.com/api",
+          // apiURL: "https://www.moonchain.com/api/v2/smart-contracts/0xD2a5A2CE6f964120d9893d22Bf0AC045c13E7C90/verification/via/standard-input",
           browserURL: "https://explorer.moonchain.com"
         }
       }
@@ -53,7 +55,8 @@ module.exports = {
       optimizer: {
         enabled: true,
         runs: 200
-      }
+      },
+      evmVersion: "paris",
     }
   },
   paths: {

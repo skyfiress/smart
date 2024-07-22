@@ -6,6 +6,7 @@
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.8",
     "@openzeppelin/hardhat-upgrades": "^3.2.0",
+    "@xyrusworx/hardhat-solidity-json": "^1.0.2",
     "ethers": "^6.13.1",
     "hardhat": "^2.22.6"
   },

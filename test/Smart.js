@@ -50,10 +50,10 @@ describe("Smart", function () {
         it("正确的滑点和手续费", async function () {
             const { token, owner } = await loadFixture(deployContractFixture);
 
-            expect(await token.LPWANFee()).to.equal(600n);
+            expect(await token.LPWANFee()).to.equal(300n);
             expect(await token.totalTaxIfBuying()).to.equal(0n);
-            expect(await token.totalTaxIfSelling()).to.equal(600n);
-            expect(await token.burnRatio()).to.equal(1000n);
+            expect(await token.totalTaxIfSelling()).to.equal(300n);
+            expect(await token.burnRatio()).to.equal(600n);
         });
 
         it("不可购买", async function () {
