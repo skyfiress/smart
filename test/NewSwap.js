@@ -4,6 +4,7 @@ const {
 } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
+const { parseEther } = require("ethers");
 
 
 describe("旧币换新", function () {
@@ -53,6 +54,10 @@ describe("旧币换新", function () {
 
         it("以旧换新", async function () {
             const { swap, usdt, usdc, owner, otherAccount } = await loadFixture(deployFixture);
+            
+            //销毁数量（2024-07-23）： 5193684288926019382087607293
+            let amount = parseEther("10000000000") - 5193684288926019382087607293n;
+            console.log(amount);
 
             await expect(swap.connect(otherAccount).swap(await usdc.getAddress(), await usdt.getAddress(), 1000n)).changeTokenBalance(usdt, otherAccount, 1000n);
         });
