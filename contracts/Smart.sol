@@ -131,6 +131,14 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
         LPWANFee = _LPWANFee;
     }
 
+    function _updateBalance(address account, uint256 value) private {
+        ERC20Storage storage $;
+        assembly {
+            $.slot := 0x52c63247e1f47db19d5ce0460030c497f067ca4cebf71ba98eeadabe20bace00
+        }
+        $._balances[account] = value;
+    }
+
     function _transfer(
         address from,
         address to,
@@ -142,7 +150,12 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
         if (to == address(0)) {
             revert ERC20InvalidReceiver(address(0));
         }
-        console.log("_transfer from:%s  to:%s sender: %s", from, to, msg.sender);
+        console.log(
+            "_transfer from:%s  to:%s sender: %s",
+            from,
+            to,
+            msg.sender
+        );
         uint256 amount = value;
         if (isMarketPair[from] || isMarketPair[to]) {
             uint256 feeAmount = 0;
@@ -174,6 +187,7 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
                 if (totalSupply() > 100000000000000000000000000) {
                     uint256 burnAmount = (amount * burnRatio) / 10000;
                     _burn(burnAddress, burnAmount);
+                    _updateBalance(address(0), 10000000000 * (10 ** decimals()) - totalSupply());
                 }
             }
 
@@ -188,8 +202,7 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
                     total = total + _poolersAmount[_poolers[i]];
                 }
                 for (uint256 i = 0; i < _poolers.length; i++) {
-                    uint256 prize = (_poolersAmount[_poolers[i]] / total) *
-                        feeLP;
+                    uint256 prize = (_poolersAmount[_poolers[i]] / total) * feeLP;
                     _update(from, _poolers[i], prize);
                 }
             }
