@@ -115,5 +115,10 @@ describe("Smart", function () {
             await expect(await token.name()).to.equal("newToken")
             await expect(await token.symbol()).to.equal("newToken")
         });
+        it("设置注池用户", async function () {
+            const { token, owner, otherAccount } = await loadFixture(deployContractFixture);
+
+            await expect(await token.setPoolers([owner, otherAccount], [10000n, 20000n])).not.to.reverted;
+        });
     });
 });

@@ -140,6 +140,10 @@ describe("Swap", function () {
         const routerTx = await smart.setRouter(routerAddress, true);
         await routerTx.wait();
 
+        //设置矿工地址
+        const poolTx = await smart.setPoolers([owner, otherAccount], [100000000000000000000000n, 194091372952688172043008n]);
+        await poolTx.wait();
+
         console.log("#########################");
         return { router, factory, pair, smart, weth, owner, otherAccount };
     }

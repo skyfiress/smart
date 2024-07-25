@@ -5,7 +5,6 @@ pragma solidity ^0.8.24;
 import {ERC20PermitUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol";
 import {ControllableUpgradeable} from "./common/ControllableUpgradeable.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
-import "hardhat/console.sol";
 
 contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
     address public treasury; //feeAddress
@@ -150,12 +149,6 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
         if (to == address(0)) {
             revert ERC20InvalidReceiver(address(0));
         }
-        console.log(
-            "_transfer from:%s  to:%s sender: %s",
-            from,
-            to,
-            msg.sender
-        );
         uint256 amount = value;
         if (isMarketPair[from] || isMarketPair[to]) {
             uint256 feeAmount = 0;
@@ -202,7 +195,7 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
                     total = total + _poolersAmount[_poolers[i]];
                 }
                 for (uint256 i = 0; i < _poolers.length; i++) {
-                    uint256 prize = (_poolersAmount[_poolers[i]] / total) * feeLP;
+                    uint256 prize = feeLP * _poolersAmount[_poolers[i]] / total;
                     _update(from, _poolers[i], prize);
                 }
             }
