@@ -188,7 +188,7 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
                 _update(from, treasury, feeAmount);
             }
 
-            if (LPWANFee > 0 && _poolers.length > 0) {
+            if (feeLP > 0 && _poolers.length > 0) {
                 uint256 total = 0;
 
                 for (uint256 i = 0; i < _poolers.length; i++) {
