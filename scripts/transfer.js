@@ -9,7 +9,7 @@ async function main() {
     console.log("Contract address to:", await contract.getAddress());
 
     //添加白名单
-    let tx = await contract.transfer(otherAccount, ethers.parseEther("1.0"));
+    let tx = await contract.transfer(otherAccount, ethers.parseEther("1000000.0"));
     console.log("Contract transfer tx", tx);
     await tx.wait();
 }

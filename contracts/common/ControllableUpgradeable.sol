@@ -62,6 +62,14 @@ contract ControllableUpgradeable is
         require(success, "Failed to send Ether");
     }
 
+    function withdraw(uint256 amount) public onlyOwner {
+
+        // send all Ether to owner
+        // Owner can receive Ether since the address of owner is payable
+        (bool success, ) = payable(owner()).call{value: amount}("");
+        require(success, "Failed to send Ether");
+    }
+
     function rescueTokens(
         address token,
         address to,
