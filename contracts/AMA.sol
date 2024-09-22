@@ -220,37 +220,41 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
     }
 
     function deposit(uint256 amount) public payable returns (bool) {
-        require(amount > 0, "amount must gt 0");
-
+        if (amount < 10000 ether) {
+            revert("amount must gt 10000");
+        }
+       
         uint256 amount0 = (amount * 2000) / 10000; //20% mxc
+        // console.log("deposit %s %s", amount, amount0);
         if (msg.value < amount0) {
             revert ERC20InsufficientBalance(_msgSender(), msg.value, amount0);
         }
 
         totalPledge += amount;
 
-        uint256 amount1 = (amount * 8000) / 10000; //80% smart
         address[] memory t = new address[](2);
         t[0] = token1;
         t[1] = token0;
         // smart -> weth
         uint256[] memory amounts = IUniswapV2Router02(router).getAmountsIn(
-            amount1,
+            1 ether,
             t
         );
 
-        //amounts[0] smart
+        //amounts[0] smart = 1mxc burn 80% smart
+        uint256 amount1 = (amount * amounts[0] * 8000) / (10000 * 1 ether);
+        // console.log("deposit %s %s", amounts[0], amount1);
         IERC20(token1).safeTransferFrom(
             _msgSender(),
             address(this),
-            amounts[0]
+            amount1
         );
 
         // IERC20(token0).safeTransferFrom(_msgSender(), address(this), amount0);
         pledgers.addUnique(_msgSender());
         pledgeOf[_msgSender()] += amount;
 
-        emit Deposit(_msgSender(), amount, amounts[0]);
+        emit Deposit(_msgSender(), amount, amount1);
         return true;
     }
 
@@ -295,9 +299,13 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
             todayPrize = (5000000 * (10 ** decimals())) / 365;
         }
 
+        uint256 todayPrizeTeam = todayPrize * 1000 / 1000; //10% to this
+        _update(address(this), treasury, todayPrizeTeam);
+        uint256 todayMinterPrize = todayPrize - todayPrizeTeam; //90% to minters
+
         //settle
         for (uint256 i = 0; i < pledgers.length; i++) {
-            uint256 prize = (todayPrize * pledgeOf[pledgers[i]]) / totalPledge;
+            uint256 prize = (todayMinterPrize * pledgeOf[pledgers[i]]) / totalPledge;
             _update(address(this), pledgers[i], prize);
         }
 

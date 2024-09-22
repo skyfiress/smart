@@ -69,7 +69,7 @@ async function main() {
   await approvalTx2.wait();
 
   //添加流动性
-  const token0Amount = ethers.parseUnits("50000");
+  const token0Amount = ethers.parseUnits("500000");
   // const token1Amount = ethers.parseUnits("100");
 
   const deadline = Math.floor(Date.now() / 1000) + 10 * 60;
@@ -96,7 +96,7 @@ async function main() {
       owner,
       deadline,
       {
-        value: ethers.parseEther("500.00")
+        value: ethers.parseEther("5000.00")
       }
     );
   await addLiquidityTx.wait();

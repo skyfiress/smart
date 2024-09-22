@@ -303,19 +303,19 @@ describe("Smart", function () {
             tx = await smart.connect(otherAccount).approve(await token.getAddress(), MaxUint256);
             await tx.wait();
 
-            tx = await token.connect(owner).deposit(ethers.parseEther("100"), {
-                value: ethers.parseEther("20"),
+            tx = await token.connect(owner).deposit(ethers.parseEther("10000"), {
+                value: ethers.parseEther("2000"),
             });
             await tx.wait();
 
-            tx = await token.connect(otherAccount).deposit(ethers.parseEther("200"), {
-                value: ethers.parseEther("40"),
+            tx = await token.connect(otherAccount).deposit(ethers.parseEther("20000"), {
+                value: ethers.parseEther("4000"),
             });
             await tx.wait();
 
             await expect(tx).not.to.reverted;
             await expect(tx).to.emit(token, 'Deposit')
-            await expect(await token.pledgeOf(otherAccount)).to.equal(parseEther("200"));
+            await expect(await token.pledgeOf(otherAccount)).to.equal(parseEther("20000"));
 
             return { token, owner, otherAccount, smart};
         }
