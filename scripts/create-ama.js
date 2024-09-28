@@ -5,7 +5,9 @@ const { ethers, upgrades } = require("hardhat");
 async function main() {
     const Contract = await ethers.getContractFactory("AMA");
     const [owner] = await ethers.getSigners();
-    const contract = await upgrades.deployProxy(Contract, [owner.address, "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"]);
+
+    // const contract = await upgrades.deployProxy(Contract, [owner.address, "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"]);
+    const contract = await upgrades.deployProxy(Contract, [owner.address, "0xcbce60bad702026d6385e5f449e44099a655d14f", "0xaF96fb3CE523B1A18369cdf31D86b3BEAC938Ba5", "0x757e5af94fC9b3d4035C2e6Cb1fD304F43c0A1A4"]);
     await contract.waitForDeployment();
     console.log("Contract deployed to:", await contract.getAddress());
     const currentImplAddress = await upgrades.erc1967.getImplementationAddress(await contract.getAddress());
@@ -25,6 +27,8 @@ async function main() {
         "0x85aA01BBa441e0300F2B398Ae25D5b07c0BFfB2A"
     ], true);
     await tx.wait();
+
+
 
 }
 

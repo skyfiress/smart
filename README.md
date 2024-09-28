@@ -18,3 +18,9 @@ function _transfer(address from, address to, uint256 value) internal
 变更为：
 <br>
 function _transfer(address from, address to, uint256 value) internal virtual
+
+合约验证：
+1.先验证
+@openzeppelin\contracts\proxy\transparent\TransparentUpgradeableProxy.sol
+2.验证所要合约
+在 remix 上复制 compilerInput 详情 保存为json文件

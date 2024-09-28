@@ -178,7 +178,7 @@ describe("Smart", function () {
             const { token, owner } = await loadFixture(deployContractFixture);
 
             expect(await token.totalSupply()).to.equal(
-                5_000_000_000_000_000_000_000_000n
+                10_000_000_000_000_000_000_000_000n
             );
         });
 
@@ -303,19 +303,19 @@ describe("Smart", function () {
             tx = await smart.connect(otherAccount).approve(await token.getAddress(), MaxUint256);
             await tx.wait();
 
-            tx = await token.connect(owner).deposit(ethers.parseEther("10000"), {
-                value: ethers.parseEther("2000"),
+            tx = await token.connect(owner).deposit(ethers.parseEther("12345"), {
+                value: ethers.parseEther("3000"),
             });
             await tx.wait();
 
-            tx = await token.connect(otherAccount).deposit(ethers.parseEther("20000"), {
-                value: ethers.parseEther("4000"),
+            tx = await token.connect(otherAccount).deposit(ethers.parseEther("23456"), {
+                value: ethers.parseEther("5000"),
             });
             await tx.wait();
 
             await expect(tx).not.to.reverted;
             await expect(tx).to.emit(token, 'Deposit')
-            await expect(await token.pledgeOf(otherAccount)).to.equal(parseEther("20000"));
+            await expect(await token.pledgeOf(otherAccount)).to.equal(parseEther("23456"));
 
             return { token, owner, otherAccount, smart};
         }

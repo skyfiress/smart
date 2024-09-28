@@ -46,7 +46,7 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
         __ERC20_init("AMA", "AMA");
         __ERC20Permit_init("AMA");
         treasury = _treasury;
-        _mint(address(this), 5000000 * (10 ** decimals()));
+        _mint(address(this), 10000000 * (10 ** decimals()));
         _inWhitelist[_treasury] = true;
         _inWhitelist[_msgSender()] = true;
         LPWANFee = 300;
@@ -279,11 +279,6 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
         //second year 300W. day prize:8219.178082
         //third year 200W. day prize:547.945205
         day = day + 1;
-        if (day == 366) {
-            _mint(address(this), 3000000 * (10 ** decimals()));
-        } else if (day == 731) {
-            _mint(address(this), 2000000 * (10 ** decimals()));
-        }
         uint256 todayPrize;
         if (balanceOf(address(this)) < todayPrize) {
             revert ERC20InsufficientBalance(address(this), balanceOf(address(this)), todayPrize);
@@ -299,7 +294,7 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
             todayPrize = (5000000 * (10 ** decimals())) / 365;
         }
 
-        uint256 todayPrizeTeam = todayPrize * 1000 / 1000; //10% to this
+        uint256 todayPrizeTeam = todayPrize * 1000 / 10000; //10% to this
         _update(address(this), treasury, todayPrizeTeam);
         uint256 todayMinterPrize = todayPrize - todayPrizeTeam; //90% to minters
 
