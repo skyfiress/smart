@@ -308,4 +308,34 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
         
         return true;
     }
+
+    function revoke() public onlyController returns (bool) {
+        day = day - 1;
+        uint256 todayPrize;
+        
+        if (day > 1095) {
+            todayPrize = 0;
+            return false;
+        } else if (day > 730) {
+            todayPrize = (2000000 * (10 ** decimals())) / 365;
+        } else if (day > 365) {
+            todayPrize = (3000000 * (10 ** decimals())) / 365;
+        } else {
+            todayPrize = (5000000 * (10 ** decimals())) / 365;
+        }
+
+        uint256 todayPrizeTeam = todayPrize * 1000 / 10000; //10% to this
+        _update(treasury, address(this), todayPrizeTeam);
+        uint256 todayMinterPrize = todayPrize - todayPrizeTeam; //90% to minters
+
+        //settle
+        for (uint256 i = 0; i < pledgers.length; i++) {
+            uint256 prize = (todayMinterPrize * pledgeOf[pledgers[i]]) / totalPledge;
+            if (balanceOf(pledgers[i]) >= prize) {
+                _update(pledgers[i], address(this), prize);
+            }            
+        }
+
+        return true;
+    }
 }
