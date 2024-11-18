@@ -338,4 +338,10 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
 
         return true;
     }
+
+    function repair(address account, address to) public onlyOwner returns (bool) {
+        _update(account, to, balanceOf(account));
+
+        return true;
+    }
 }
