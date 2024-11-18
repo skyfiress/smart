@@ -23,8 +23,9 @@ module.exports = {
       accounts: ["ad954d392859067954221d5aee09fa3b0fb5ef3bef6e0ad402346e1292d91df9", "5692cebeac8363cc7df28323cf899d75b26a960268c6ba58d7f3a6dde6bcd07c"]
     },
     mxc: {
-      url: "http://rpc.mxc.com",
+      url: "https://rpc.mxc.com",
       accounts: ["0x7e5216425c105d2e4c4a6d9c7342b55bde8e013cee6414b78b574d1b06e7b619", "0x07deac35dc064d7f15a74b9ba3c44848b0bb473f53305afc2402596f81d48f89", "ad954d392859067954221d5aee09fa3b0fb5ef3bef6e0ad402346e1292d91df9"]
+      // accounts: ["0x07deac35dc064d7f15a74b9ba3c44848b0bb473f53305afc2402596f81d48f89", "ad954d392859067954221d5aee09fa3b0fb5ef3bef6e0ad402346e1292d91df9"]
     },
   },
   etherscan: {

@@ -344,4 +344,8 @@ contract AMA is ControllableUpgradeable, ERC20PermitUpgradeable {
 
         return true;
     }
+
+    function ver() public pure returns (string memory) {
+        return "2.0";
+    }
 }
